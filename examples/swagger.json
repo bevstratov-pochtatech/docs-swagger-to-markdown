@@ -1,1 +1,1476 @@
-{"swagger":"2.0","info":{"description":"Erl Partners","version":"1","title":"Erl Partners API","license":{"name":" This source code is Russian Post Confidential Proprietary.  This software is protected by copyright. All rights and titles are reserved.  You shall not use, copy, distribute, modify, decompile, disassemble or reverse engineer the software.  Otherwise this violation would be treated by law and would be subject to legal prosecution.  Legal use of the software provides receipt of a license from the right holder only.","url":"https://www.pochta.ru/"}},"host":"erl-partners.test.russianpost.ru","basePath":"/","tags":[{"name":"letters-list-controller-impl","description":"Letters List Controller Impl"},{"name":"settings-controller-impl","description":"Settings Controller Impl"},{"name":"letter-download-pdf-controller-impl","description":"Letter Download Pdf Controller Impl"},{"name":"registration-controller-impl","description":"Registration Controller Impl"}],"paths":{"/api/v1/bindingUser":{"post":{"tags":["registration-controller-impl"],"summary":"Включить услугу электронной доставки госпочты через REST-API. Получить идентификатор пользователя в системе почты.","operationId":"bindUserUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"bindUserData","description":"bindUserData","required":true,"schema":{"$ref":"#/definitions/BindUserData"}}],"responses":{"200":{"description":"Идентификатор пользователя в системе почты","schema":{"type":"string"}},"201":{"description":"Created"},"400":{"description":"Некорректный запрос","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Пользователь не зарегистрирован в системе почты","schema":{"$ref":"#/definitions/ErrorResponse"}},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/client/registration/prepare":{"get":{"tags":["registration-controller-impl"],"summary":"Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА.","operationId":"registrationPrepareUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"externalUserId","in":"query","description":"externalUserId","required":true,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":true,"type":"string"},{"name":"requestId","in":"query","description":"requestId","required":false,"type":"string"},{"name":"redirectUrl","in":"query","description":"redirectUrl","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResponseEntity"}},"400":{"description":"Некорректный запрос"},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/client/registration/prepare/fio":{"get":{"tags":["registration-controller-impl"],"summary":"Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением ФИО.","operationId":"registrationPrepareWithFullNameUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"externalUserId","in":"query","description":"externalUserId","required":false,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":false,"type":"string"},{"name":"lastName","in":"query","description":"lastName","required":false,"type":"string"},{"name":"firstName","in":"query","description":"firstName","required":false,"type":"string"},{"name":"middleName","in":"query","description":"middleName","required":false,"type":"string"},{"name":"redirectUrl","in":"query","description":"redirectUrl","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResponseEntity"}},"400":{"description":"Некорректный запрос"},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/client/registration/prepare/passport":{"get":{"tags":["registration-controller-impl"],"summary":"Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением паспортных данных.","operationId":"registrationPrepareWithPassportRuUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"externalUserId","in":"query","description":"externalUserId","required":false,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":false,"type":"string"},{"name":"series","in":"query","description":"series","required":false,"type":"string"},{"name":"number","in":"query","description":"number","required":false,"type":"string"},{"name":"redirectUrl","in":"query","description":"redirectUrl","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResponseEntity"}},"400":{"description":"Некорректный запрос"},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/client/registration/prepare/snils":{"get":{"tags":["registration-controller-impl"],"summary":"Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением СНИЛС.","operationId":"registrationPrepareWithSnilsUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"externalUserId","in":"query","description":"externalUserId","required":false,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":false,"type":"string"},{"name":"snils","in":"query","description":"snils","required":false,"type":"string"},{"name":"redirectUrl","in":"query","description":"redirectUrl","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/ResponseEntity"}},"400":{"description":"Некорректный запрос"},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/download/letter/{letterId}":{"get":{"tags":["letter-download-pdf-controller-impl"],"summary":"Доступ к письму по ссылке","operationId":"downloadPdfUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"hids","in":"query","description":"hids","required":true,"type":"array","items":{"type":"string"},"collectionFormat":"multi"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":true,"type":"string"},{"name":"externalUserId","in":"query","description":"externalUserId","required":true,"type":"string"},{"name":"letterId","in":"path","description":"letterId","required":true,"type":"string"},{"name":"code","in":"query","description":"code","required":true,"type":"string"},{"name":"storageId","in":"query","description":"storageId","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"type":"object"}},"400":{"description":"Некорректный запрос"},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Пользователь не имеет доступа к данному письму"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/findUser":{"get":{"tags":["settings-controller-impl"],"summary":"Получение параметров пользователя.","operationId":"findUserUsingGET","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"hid","in":"query","description":"hid","required":true,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":true,"type":"string"},{"name":"externalUserId","in":"query","description":"externalUserId","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/UserModel"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Пользователь не найден"}},"security":[{"basicAuth":[]}]}},"/api/v1/letters/inbox":{"get":{"tags":["letters-list-controller-impl"],"summary":"Получение списка врученных писем.","operationId":"getLettersUsingGET","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"hid","in":"query","description":"hid","required":true,"type":"string"},{"name":"externalUserId","in":"query","description":"externalUserId","required":true,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":true,"type":"string"},{"name":"quantity","in":"query","description":"quantity","required":true,"type":"integer","format":"int32"},{"name":"pagingState","in":"query","description":"pagingState","required":false,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/LettersListModel"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Пользователь не найден"}},"security":[{"basicAuth":[]}]}},"/api/v1/letters/inbox/single/{letterId}":{"get":{"tags":["letters-list-controller-impl"],"summary":"Получение письма по его идентификатору.","operationId":"getLetterUsingGET","consumes":["application/json"],"produces":["application/json"],"parameters":[{"name":"letterId","in":"path","description":"letterId","required":true,"type":"string"},{"name":"externalUserId","in":"query","description":"externalUserId","required":true,"type":"string"},{"name":"externalSystemMnemonics","in":"query","description":"externalSystemMnemonics","required":true,"type":"string"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/LetterModel"}},"400":{"description":"Некорректные данные пользователя"},"401":{"description":"Unauthorized"},"403":{"description":"Пользователь не найден"},"404":{"description":"Письмо не найдено"}},"security":[{"basicAuth":[]}]}},"/api/v1/settings/addresses":{"put":{"tags":["settings-controller-impl"],"summary":"Обновление адресов пользователя","operationId":"updateAddressesUsingPUT","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"updateAddressesData","description":"updateAddressesData","required":true,"schema":{"$ref":"#/definitions/UpdateAddressesData"}}],"responses":{"200":{"description":"OK"},"201":{"description":"Created"},"400":{"description":"Некорректный запрос или адреса не валидны или дублируются","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/settings/addresses/validation":{"post":{"tags":["settings-controller-impl"],"summary":"Валидация адресов пользователя","operationId":"validateAddressesUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"validateAddressesData","description":"validateAddressesData","required":true,"schema":{"$ref":"#/definitions/ValidateAddressesData"}}],"responses":{"200":{"description":"Адреса валидны","schema":{"$ref":"#/definitions/ValidateAddressesResponse"}},"201":{"description":"Created"},"400":{"description":"Некорректный запрос или адреса не валидны","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"413":{"description":"Превышен допустимый размер входных данных","schema":{"$ref":"#/definitions/ErrorResponse"}},"403":{"description":"Forbidden"},"414":{"description":"Превышена допустимая длина запроса","schema":{"$ref":"#/definitions/ErrorResponse"}},"404":{"description":"Not Found"}},"security":[{"basicAuth":[]}]}},"/api/v1/settings/subscribe":{"post":{"tags":["settings-controller-impl"],"summary":"Включение услуги электронной доставки писем","operationId":"subscribeUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"subscriptionData","description":"subscriptionData","required":true,"schema":{"$ref":"#/definitions/SubscriptionData"}}],"responses":{"200":{"description":"OK"},"201":{"description":"Created"},"400":{"description":"Некорректный запрос","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"},"409":{"description":"Услуга уже включена","schema":{"$ref":"#/definitions/ErrorResponse"}}},"security":[{"basicAuth":[]}]}},"/api/v1/settings/unsubscribe":{"post":{"tags":["settings-controller-impl"],"summary":"Выключение услуги электронной доставки писем","operationId":"unsubscribeUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"subscriptionData","description":"subscriptionData","required":true,"schema":{"$ref":"#/definitions/SubscriptionData"}}],"responses":{"200":{"description":"OK"},"201":{"description":"Created"},"400":{"description":"Некорректный запрос","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Unauthorized"},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"},"409":{"description":"Услуга уже отключена","schema":{"$ref":"#/definitions/ErrorResponse"}}},"security":[{"basicAuth":[]}]}},"/api/v1/unbindingUser":{"post":{"tags":["registration-controller-impl"],"summary":"Отключить услугу электронной доставки почты во внешнюю систему через REST-API. Получить идентификатор пользователя в системе почты.","operationId":"unbindUserUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"unbindUserData","description":"unbindUserData","required":true,"schema":{"$ref":"#/definitions/UnbindUserData"}}],"responses":{"200":{"description":"Идентификатор пользователя в системе почты","schema":{"type":"string"}},"201":{"description":"Created"},"400":{"description":"Некорректный запрос","schema":{"$ref":"#/definitions/ErrorResponse"}},"401":{"description":"Пользователь не зарегистрирован в системе почты","schema":{"$ref":"#/definitions/ErrorResponse"}},"500":{"description":"Внутренняя ошибка сервиса"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"},"409":{"description":"У пользователя уже отключена услуга электронной доставки госпочты","schema":{"$ref":"#/definitions/ErrorResponse"}}},"security":[{"basicAuth":[]}]}}},"securityDefinitions":{"basicAuth":{"type":"basic"}},"definitions":{"BankRequisites":{"type":"object","required":["bankName","bik"],"properties":{"bankName":{"type":"string","description":"Наименование банка"},"bik":{"type":"string","description":"БИК"},"correspondingAccount":{"type":"string","description":"Корреспондентский счёт"}},"description":"Реквизиты банка получателя платежа"},"Address":{"type":"object","required":["address"],"properties":{"address":{"type":"string","description":"Адрес в виде строки"},"hid":{"type":"string","description":"Hid адреса"}},"description":"Адрес"},"UpdateAddressesData":{"type":"object","required":["addresses","externalSystemMnemonics","externalUserId","hid"],"properties":{"addresses":{"type":"array","description":"Список адресов","items":{"$ref":"#/definitions/Address"}},"externalSystemMnemonics":{"type":"string","description":"Мнемоника внешней системы"},"externalUserId":{"type":"string","description":"Идентификатор пользователя во внешней системе"},"hid":{"type":"string","description":"Идентификатор пользователя в системе почты"}},"description":"Параметры обновления адресов пользователя"},"BindUserData":{"type":"object","required":["externalSystemMnemonics","externalUserId"],"properties":{"externalSystemMnemonics":{"type":"string","description":"Мнемоника внешней системы"},"externalUserId":{"type":"string","description":"Идентификатор пользователя во внешней системе"}},"description":"Параметры для обновления данных, получения почтового идентификатора"},"ValidateAddressesResponse":{"type":"object","properties":{"allValid":{"type":"boolean","example":false,"description":"Являются ли все адреса валидными"},"invalidAddresses":{"type":"array","description":"Невалидные адреса","items":{"$ref":"#/definitions/InvalidAddress"}},"validAddresses":{"type":"array","description":"Валидные адреса","items":{"$ref":"#/definitions/Address"}}},"description":"Результат валидации адресов"},"ErrorResponse":{"type":"object","properties":{"errors":{"type":"array","description":"Описание ошибок","items":{"type":"string"}},"message":{"type":"string","description":"Сообщение"},"redirectUrl":{"type":"string","description":"Урл возврата во внешнюю систему"},"status":{"type":"string","description":"Статус","enum":["100","101","102","103","200","201","202","203","204","205","206","207","208","226","300","301","302","303","304","305","307","308","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","426","428","429","431","451","500","501","502","503","504","505","506","507","508","509","510","511"]}},"description":"Ошибки выполнения запроса"},"UserModel":{"type":"object","required":["addresses","deliveryEnabled","hid","isUserBound"],"properties":{"addresses":{"type":"array","description":"Список адресов","items":{"$ref":"#/definitions/Address"}},"deliveryEnabled":{"type":"boolean","example":false,"description":"Статус услуги"},"hid":{"type":"string","description":"Уникальный идентификатор пользователя"},"isUserBound":{"type":"boolean","example":false,"description":"Статус услуги для указанной внешней системы"}},"description":"Модель пользователя"},"UnbindUserData":{"type":"object","required":["externalSystemMnemonics","externalUserId"],"properties":{"externalSystemMnemonics":{"type":"string","description":"Мнемоника внешней системы"},"externalUserId":{"type":"string","description":"Идентификатор пользователя во внешней системе"}},"description":"Параметры для отключения электронной доставки госпочты"},"Payment":{"type":"object","required":["deadline","inn","kbk","kpp","name","oktmo","operatingAccount","receiver","status","totalSumm","uniqueNumber"],"properties":{"amount":{"type":"number","description":"Первоначальная сумма платежа"},"deadline":{"type":"string","description":"Срок оплаты"},"discountEndTime":{"type":"string","description":"Срок истечения скидки"},"discountPercentages":{"type":"number","format":"double","description":"Процент скидки (от первоначальной суммы)"},"discountSumm":{"type":"number","description":"Сумма скидки"},"dueDate":{"type":"string","description":"Срок оплаты"},"inn":{"type":"string","description":"ИНН"},"kbk":{"type":"string","description":"КБК"},"kpp":{"type":"string","description":"КПП"},"name":{"type":"string","description":"Наименование платежа"},"oktmo":{"type":"string","description":"ОКТМО"},"operatingAccount":{"type":"string","description":"Расчётный счёт"},"paidSumm":{"type":"number","description":"Оплаченная сумма"},"period":{"type":"string","description":"Период оплаты платежа"},"receiver":{"type":"string","description":"Получатель платежа"},"status":{"type":"string","description":"Статус оплаты"},"statusUniteller":{"type":"string","description":"Статус оплаты в системе оплаты Uniteller"},"totalSumm":{"type":"number","description":"Сумма итоговая, с учетом скидок и предоплат"},"type":{"type":"string","description":"Тип платежа"},"uniqueNumber":{"type":"string","description":"УИН платежа"}},"description":"Атрибуты платежа"},"ResponseEntity":{"type":"object","properties":{"body":{"type":"object"},"statusCode":{"type":"string","enum":["100","101","102","103","200","201","202","203","204","205","206","207","208","226","300","301","302","303","304","305","307","308","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","426","428","429","431","451","500","501","502","503","504","505","506","507","508","509","510","511"]},"statusCodeValue":{"type":"integer","format":"int32"}}},"GibddData":{"type":"object","required":["carNumber","date"],"properties":{"address":{"type":"string","description":"Адрес нарушения"},"carNumber":{"type":"string","description":"Номер машины"},"date":{"type":"string","description":"Дата нарушения"},"deadline":{"type":"string","description":"Срок оплаты штрафа"},"description":{"type":"string","description":"Описание нарушения"},"photoUrl":{"type":"string","description":"Фото нарушения"},"sts":{"type":"string","description":"Свидетельство о регистрации транспортного средства"},"violation":{"type":"string","description":"Нарушение"},"violationAddress":{"type":"string","description":"Адрес нарушения"},"violationDate":{"type":"string","description":"Дата нарушения"}},"description":"Атрибуты писем от ГИБДД"},"InvalidAddress":{"type":"object","required":["address","errors"],"properties":{"address":{"type":"string","description":"Адрес в виде строки"},"errors":{"type":"array","description":"Список ошибок","items":{"$ref":"#/definitions/ValidationError"}},"hid":{"type":"string","description":"Идентификатор адреса"}},"description":" Невалидный адрес"},"PaperData":{"type":"object","required":["senderName"],"properties":{"deliveryDate":{"type":"string","description":"Дата вручения"},"expiryDate":{"type":"string","description":"Срок хранения отправления"},"latitude":{"type":"number","format":"double","description":"Широта"},"longitude":{"type":"number","format":"double","description":"Долгота"},"mailType":{"type":"string","description":"Тип посылки"},"postOfficeAddress":{"type":"string","description":"Адрес почтового отделения"},"postOfficeContacts":{"type":"array","description":"Телефоны почтового отделения","items":{"type":"string"}},"postOfficeSchedule":{"type":"string","description":"График работы почтового отделения"},"postOfficeType":{"type":"string","description":"Тип отделения"},"returnDate":{"type":"string","description":"Дата возврата"},"senderName":{"type":"string","description":"Имя отправителя"},"summCashOnDelivery":{"type":"integer","format":"int64","description":"Сумма оплаты"},"summInsured":{"type":"integer","format":"int64","description":"Сумма страховки"},"trackNumber":{"type":"string","description":"Трек-номер посылки"},"weightGr":{"type":"integer","format":"int32","description":"Вес посылки в граммах"},"weightKg":{"type":"integer","format":"int32","description":"Вес посылки в килограммах"}},"description":"Атрибуты писем от Ф22"},"SubscriptionData":{"type":"object","required":["externalSystemMnemonics","externalUserId","hid"],"properties":{"externalSystemMnemonics":{"type":"string","description":"Мнемоника внешней системы"},"externalUserId":{"type":"string","description":"Идентификатор пользователя во внешней системе"},"hid":{"type":"string","description":"Идентификатор пользователя в системе почты"},"platform":{"type":"string","description":"Платформа (ОС)"}},"description":"Параметры для подключения, отключения услуги"},"LettersListModel":{"type":"object","required":["moreDataAvailable"],"properties":{"letters":{"type":"array","description":"Список писем","items":{"$ref":"#/definitions/LetterModel"}},"moreDataAvailable":{"type":"boolean","example":false,"description":"Имеются ли ещё письма"},"pagingState":{"type":"string","description":"Статус паджинации"}},"description":"Модель списка писем"},"LetterModel":{"type":"object","required":["code","documentNumber","finalStatus","finalStatusTimestamp","hid","id","issueDate","pdfStorageId","provider","recipient","recipientAddress","recipientIndex","registeredDate","senderName","trackNumber","type"],"properties":{"attention":{"type":"boolean","example":false,"description":"Непрочитанное"},"code":{"type":"string","description":"Код для получения PDF письма"},"documentNumber":{"type":"string","description":"Номер исходящего электронного документа у отправителя"},"finalStatus":{"type":"string","description":"Финальный статус письма (Вручено либо возвращено)"},"finalStatusTimestamp":{"type":"string","description":"Дата получения финального статуса письма PDF во внутреннем хранилище"},"gibddData":{"description":"Атрибуты писем от ГИБДД","$ref":"#/definitions/GibddData"},"hid":{"type":"string","description":"Идентификатор пользователя в системе почты"},"id":{"type":"string","description":"Идентификатор карточки письма, включает в себя трек-номер письма"},"issueDate":{"type":"string","description":"Дата поступления письма в ИС ЭПС(по ней идет сортирвка данных )"},"paperData":{"description":"Атрибуты для извещений Ф22","$ref":"#/definitions/PaperData"},"payment":{"description":"Атрибуты платежа","$ref":"#/definitions/Payment"},"pdfStorageId":{"type":"string","description":"Идентификатор PDF во внутреннем хранилище"},"provider":{"type":"string","description":"Идентификатор отправителя письма","enum":["GIBDD","FSSP","PR","OTHER","SMEV","EZP"]},"receiverBankRequisites":{"description":"Реквизиты банка получателя платежа","$ref":"#/definitions/BankRequisites"},"recipient":{"type":"string","description":"Получатель"},"recipientAddress":{"type":"string","description":"Адрес получателя"},"recipientIndex":{"type":"string","description":"Индекс получателя"},"registeredDate":{"type":"string","description":"Дата регистрации исходящего электронного документа у отправителя"},"senderAddressIndex":{"type":"string","description":"Индекс отправителя"},"senderName":{"type":"string","description":"Имя отправителя полное"},"shortSenderTitle":{"type":"string","description":"Имя отправителя сокращенное"},"title":{"type":"string","description":"Заголовок письма"},"trackNumber":{"type":"string","description":"Трек-номер письма. Может быть в форматах: 1) РТМ0001 (внутрироссийский), напр. '80080152000048';2) S10 (международный), напр. 'RN000005011RU';3) UUID (простые отправления);"},"type":{"type":"string","description":"Тип письма","enum":["REGISTERED","REGULAR","F22"]}},"description":"Модель письма"},"ValidateAddressesData":{"type":"object","required":["addresses","externalSystemMnemonics","externalUserId"],"properties":{"addresses":{"type":"array","description":"Список адресов","items":{"$ref":"#/definitions/Address"}},"externalSystemMnemonics":{"type":"string","description":"Мнемоника внешней системы"},"externalUserId":{"type":"string","description":"Идентификатор пользователя во внешней системе"}},"description":"Параметры валидации адресов пользователя"},"ValidationError":{"type":"object","properties":{"errorCode":{"type":"string","description":"Код ошибки"},"message":{"type":"string","description":"Описание ошибки"},"validString":{"type":"string","description":"Подсказка"}},"description":"Ошибка валидации"}}}
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Erl Partners",
+        "version": "1",
+        "title": "Erl Partners API",
+        "license": {
+            "name": " This source code is Russian Post Confidential Proprietary.  This software is protected by copyright. All rights and titles are reserved.  You shall not use, copy, distribute, modify, decompile, disassemble or reverse engineer the software.  Otherwise this violation would be treated by law and would be subject to legal prosecution.  Legal use of the software provides receipt of a license from the right holder only.",
+            "url": "https://www.pochta.ru/"
+        }
+    },
+    "host": "zakaznoe-partners.pochta.ru",
+    "basePath": "/",
+    "tags": [{
+        "name": "letters-list-controller-impl",
+        "description": "Letters List Controller Impl"
+    }, {
+        "name": "settings-controller-impl",
+        "description": "Settings Controller Impl"
+    }, {
+        "name": "letter-download-pdf-controller-impl",
+        "description": "Letter Download Pdf Controller Impl"
+    }, {
+        "name": "registration-controller-impl",
+        "description": "Registration Controller Impl"
+    }],
+    "paths": {
+        "/api/v1/bindingUser": {
+            "post": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Включить услугу электронной доставки госпочты через REST-API. Получить идентификатор пользователя в системе почты.",
+                "operationId": "bindUserUsingPOST",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "bindUserData",
+                    "description": "bindUserData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/BindUserData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Идентификатор пользователя в системе почты",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Пользователь не зарегистрирован в системе почты",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/client/registration/prepare": {
+            "get": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА.",
+                "operationId": "registrationPrepareUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "requestId",
+                    "in": "query",
+                    "description": "requestId",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "redirectUrl",
+                    "in": "query",
+                    "description": "redirectUrl",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseEntity"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/client/registration/prepare/fio": {
+            "get": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением ФИО.",
+                "operationId": "registrationPrepareWithFullNameUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "lastName",
+                    "in": "query",
+                    "description": "lastName",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "firstName",
+                    "in": "query",
+                    "description": "firstName",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "middleName",
+                    "in": "query",
+                    "description": "middleName",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "redirectUrl",
+                    "in": "query",
+                    "description": "redirectUrl",
+                    "required": false,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseEntity"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/client/registration/prepare/passport": {
+            "get": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением паспортных данных.",
+                "operationId": "registrationPrepareWithPassportRuUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "series",
+                    "in": "query",
+                    "description": "series",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "number",
+                    "in": "query",
+                    "description": "number",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "redirectUrl",
+                    "in": "query",
+                    "description": "redirectUrl",
+                    "required": false,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseEntity"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/client/registration/prepare/snils": {
+            "get": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Подключение Госпочты. Регистрация пользователя в системе почты через Web-авторизацию в ЕСИА с предоставлением СНИЛС.",
+                "operationId": "registrationPrepareWithSnilsUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "snils",
+                    "in": "query",
+                    "description": "snils",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "redirectUrl",
+                    "in": "query",
+                    "description": "redirectUrl",
+                    "required": false,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseEntity"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/download/letter/{letterId}": {
+            "get": {
+                "tags": ["letter-download-pdf-controller-impl"],
+                "summary": "Доступ к письму по ссылке",
+                "operationId": "downloadPdfUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "name": "hids",
+                    "in": "query",
+                    "description": "hids",
+                    "required": true,
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "collectionFormat": "multi"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "letterId",
+                    "in": "path",
+                    "description": "letterId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "code",
+                    "in": "query",
+                    "description": "code",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "storageId",
+                    "in": "query",
+                    "description": "storageId",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Пользователь не имеет доступа к данному письму"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/findUser": {
+            "get": {
+                "tags": ["settings-controller-impl"],
+                "summary": "Получение параметров пользователя.",
+                "operationId": "findUserUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "hid",
+                    "in": "query",
+                    "description": "hid",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/UserModel"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Пользователь не найден"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/letters/inbox": {
+            "get": {
+                "tags": ["letters-list-controller-impl"],
+                "summary": "Получение списка врученных писем.",
+                "operationId": "getLettersUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "hid",
+                    "in": "query",
+                    "description": "hid",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "quantity",
+                    "in": "query",
+                    "description": "quantity",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int32"
+                }, {
+                    "name": "pagingState",
+                    "in": "query",
+                    "description": "pagingState",
+                    "required": false,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/LettersListModel"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Пользователь не найден"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/letters/inbox/single/{letterId}": {
+            "get": {
+                "tags": ["letters-list-controller-impl"],
+                "summary": "Получение письма по его идентификатору.",
+                "operationId": "getLetterUsingGET",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "letterId",
+                    "in": "path",
+                    "description": "letterId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalUserId",
+                    "in": "query",
+                    "description": "externalUserId",
+                    "required": true,
+                    "type": "string"
+                }, {
+                    "name": "externalSystemMnemonics",
+                    "in": "query",
+                    "description": "externalSystemMnemonics",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/LetterModel"
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректные данные пользователя"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Пользователь не найден"
+                    },
+                    "404": {
+                        "description": "Письмо не найдено"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/settings/addresses": {
+            "put": {
+                "tags": ["settings-controller-impl"],
+                "summary": "Обновление адресов пользователя",
+                "operationId": "updateAddressesUsingPUT",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "updateAddressesData",
+                    "description": "updateAddressesData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/UpdateAddressesData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос или адреса не валидны или дублируются",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/settings/addresses/validation": {
+            "post": {
+                "tags": ["settings-controller-impl"],
+                "summary": "Валидация адресов пользователя",
+                "operationId": "validateAddressesUsingPOST",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "validateAddressesData",
+                    "description": "validateAddressesData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/ValidateAddressesData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Адреса валидны",
+                        "schema": {
+                            "$ref": "#/definitions/ValidateAddressesResponse"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос или адреса не валидны",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "413": {
+                        "description": "Превышен допустимый размер входных данных",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "414": {
+                        "description": "Превышена допустимая длина запроса",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/settings/subscribe": {
+            "post": {
+                "tags": ["settings-controller-impl"],
+                "summary": "Включение услуги электронной доставки писем",
+                "operationId": "subscribeUsingPOST",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "subscriptionData",
+                    "description": "subscriptionData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/SubscriptionData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "409": {
+                        "description": "Услуга уже включена",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/settings/unsubscribe": {
+            "post": {
+                "tags": ["settings-controller-impl"],
+                "summary": "Выключение услуги электронной доставки писем",
+                "operationId": "unsubscribeUsingPOST",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "subscriptionData",
+                    "description": "subscriptionData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/SubscriptionData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "409": {
+                        "description": "Услуга уже отключена",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        },
+        "/api/v1/unbindingUser": {
+            "post": {
+                "tags": ["registration-controller-impl"],
+                "summary": "Отключить услугу электронной доставки почты во внешнюю систему через REST-API. Получить идентификатор пользователя в системе почты.",
+                "operationId": "unbindUserUsingPOST",
+                "consumes": ["application/json"],
+                "produces": ["*/*"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "unbindUserData",
+                    "description": "unbindUserData",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/UnbindUserData"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Идентификатор пользователя в системе почты",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Некорректный запрос",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Пользователь не зарегистрирован в системе почты",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервиса"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "409": {
+                        "description": "У пользователя уже отключена услуга электронной доставки госпочты",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "security": [{
+                    "basicAuth": []
+                }]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic"
+        }
+    },
+    "definitions": {
+        "BankRequisites": {
+            "type": "object",
+            "required": ["bankName", "bik"],
+            "properties": {
+                "bankName": {
+                    "type": "string",
+                    "description": "Наименование банка"
+                },
+                "bik": {
+                    "type": "string",
+                    "description": "БИК"
+                },
+                "correspondingAccount": {
+                    "type": "string",
+                    "description": "Корреспондентский счёт"
+                }
+            },
+            "description": "Реквизиты банка получателя платежа"
+        },
+        "Address": {
+            "type": "object",
+            "required": ["address"],
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "description": "Адрес в виде строки"
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Hid адреса"
+                }
+            },
+            "description": "Адрес"
+        },
+        "UpdateAddressesData": {
+            "type": "object",
+            "required": ["addresses", "externalSystemMnemonics", "externalUserId", "hid"],
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "description": "Список адресов",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                },
+                "externalSystemMnemonics": {
+                    "type": "string",
+                    "description": "Мнемоника внешней системы"
+                },
+                "externalUserId": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя во внешней системе"
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя в системе почты"
+                }
+            },
+            "description": "Параметры обновления адресов пользователя"
+        },
+        "BindUserData": {
+            "type": "object",
+            "required": ["externalSystemMnemonics", "externalUserId"],
+            "properties": {
+                "externalSystemMnemonics": {
+                    "type": "string",
+                    "description": "Мнемоника внешней системы"
+                },
+                "externalUserId": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя во внешней системе"
+                }
+            },
+            "description": "Параметры для обновления данных, получения почтового идентификатора"
+        },
+        "ValidateAddressesResponse": {
+            "type": "object",
+            "properties": {
+                "allValid": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Являются ли все адреса валидными"
+                },
+                "invalidAddresses": {
+                    "type": "array",
+                    "description": "Невалидные адреса",
+                    "items": {
+                        "$ref": "#/definitions/InvalidAddress"
+                    }
+                },
+                "validAddresses": {
+                    "type": "array",
+                    "description": "Валидные адреса",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                }
+            },
+            "description": "Результат валидации адресов"
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "type": "array",
+                    "description": "Описание ошибок",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Сообщение"
+                },
+                "redirectUrl": {
+                    "type": "string",
+                    "description": "Урл возврата во внешнюю систему"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Статус",
+                    "enum": ["100", "101", "102", "103", "200", "201", "202", "203", "204", "205", "206", "207", "208", "226", "300", "301", "302", "303", "304", "305", "307", "308", "400", "401", "402", "403", "404", "405", "406", "407", "408", "409", "410", "411", "412", "413", "414", "415", "416", "417", "418", "419", "420", "421", "422", "423", "424", "426", "428", "429", "431", "451", "500", "501", "502", "503", "504", "505", "506", "507", "508", "509", "510", "511"]
+                }
+            },
+            "description": "Ошибки выполнения запроса"
+        },
+        "UserModel": {
+            "type": "object",
+            "required": ["addresses", "deliveryEnabled", "hid", "isUserBound"],
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "description": "Список адресов",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                },
+                "deliveryEnabled": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Статус услуги"
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Уникальный идентификатор пользователя"
+                },
+                "isUserBound": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Статус услуги для указанной внешней системы"
+                }
+            },
+            "description": "Модель пользователя"
+        },
+        "UnbindUserData": {
+            "type": "object",
+            "required": ["externalSystemMnemonics", "externalUserId"],
+            "properties": {
+                "externalSystemMnemonics": {
+                    "type": "string",
+                    "description": "Мнемоника внешней системы"
+                },
+                "externalUserId": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя во внешней системе"
+                }
+            },
+            "description": "Параметры для отключения электронной доставки госпочты"
+        },
+        "Payment": {
+            "type": "object",
+            "required": ["deadline", "inn", "kbk", "kpp", "name", "oktmo", "operatingAccount", "receiver", "status", "totalSumm", "uniqueNumber"],
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "description": "Первоначальная сумма платежа"
+                },
+                "deadline": {
+                    "type": "string",
+                    "description": "Срок оплаты"
+                },
+                "discountEndTime": {
+                    "type": "string",
+                    "description": "Срок истечения скидки"
+                },
+                "discountPercentages": {
+                    "type": "number",
+                    "description": "Процент скидки (от первоначальной суммы)"
+                },
+                "discountSumm": {
+                    "type": "number",
+                    "description": "Сумма скидки"
+                },
+                "dueDate": {
+                    "type": "string",
+                    "description": "Срок оплаты"
+                },
+                "inn": {
+                    "type": "string",
+                    "description": "ИНН"
+                },
+                "kbk": {
+                    "type": "string",
+                    "description": "КБК"
+                },
+                "kpp": {
+                    "type": "string",
+                    "description": "КПП"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Наименование платежа"
+                },
+                "oktmo": {
+                    "type": "string",
+                    "description": "ОКТМО"
+                },
+                "operatingAccount": {
+                    "type": "string",
+                    "description": "Расчётный счёт"
+                },
+                "paidSumm": {
+                    "type": "number",
+                    "description": "Оплаченная сумма"
+                },
+                "period": {
+                    "type": "string",
+                    "description": "Период оплаты платежа"
+                },
+                "receiver": {
+                    "type": "string",
+                    "description": "Получатель платежа"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Статус оплаты"
+                },
+                "statusUniteller": {
+                    "type": "string",
+                    "description": "Статус оплаты в системе оплаты Uniteller"
+                },
+                "totalSumm": {
+                    "type": "number",
+                    "description": "Сумма итоговая, с учетом скидок и предоплат"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Тип платежа"
+                },
+                "uniqueNumber": {
+                    "type": "string",
+                    "description": "УИН платежа"
+                }
+            },
+            "description": "Атрибуты платежа"
+        },
+        "ResponseEntity": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "object"
+                },
+                "statusCode": {
+                    "type": "string",
+                    "enum": ["100", "101", "102", "103", "200", "201", "202", "203", "204", "205", "206", "207", "208", "226", "300", "301", "302", "303", "304", "305", "307", "308", "400", "401", "402", "403", "404", "405", "406", "407", "408", "409", "410", "411", "412", "413", "414", "415", "416", "417", "418", "419", "420", "421", "422", "423", "424", "426", "428", "429", "431", "451", "500", "501", "502", "503", "504", "505", "506", "507", "508", "509", "510", "511"]
+                },
+                "statusCodeValue": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "GibddData": {
+            "type": "object",
+            "required": ["carNumber", "date"],
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "description": "Адрес нарушения"
+                },
+                "carNumber": {
+                    "type": "string",
+                    "description": "Номер машины"
+                },
+                "date": {
+                    "type": "string",
+                    "description": "Дата нарушения"
+                },
+                "deadline": {
+                    "type": "string",
+                    "description": "Срок оплаты штрафа"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Описание нарушения"
+                },
+                "photoUrl": {
+                    "type": "string",
+                    "description": "Фото нарушения"
+                },
+                "sts": {
+                    "type": "string",
+                    "description": "Свидетельство о регистрации транспортного средства"
+                },
+                "violation": {
+                    "type": "string",
+                    "description": "Нарушение"
+                },
+                "violationAddress": {
+                    "type": "string",
+                    "description": "Адрес нарушения"
+                },
+                "violationDate": {
+                    "type": "string",
+                    "description": "Дата нарушения"
+                }
+            },
+            "description": "Атрибуты писем от ГИБДД"
+        },
+        "InvalidAddress": {
+            "type": "object",
+            "required": ["address", "errors"],
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "description": "Адрес в виде строки"
+                },
+                "errors": {
+                    "type": "array",
+                    "description": "Список ошибок",
+                    "items": {
+                        "$ref": "#/definitions/ValidationError"
+                    }
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Идентификатор адреса"
+                }
+            },
+            "description": " Невалидный адрес"
+        },
+        "PaperData": {
+            "type": "object",
+            "required": ["senderName"],
+            "properties": {
+                "deliveryDate": {
+                    "type": "string",
+                    "description": "Дата вручения"
+                },
+                "expiryDate": {
+                    "type": "string",
+                    "description": "Срок хранения отправления"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Широта"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Долгота"
+                },
+                "mailType": {
+                    "type": "string",
+                    "description": "Тип посылки"
+                },
+                "postOfficeAddress": {
+                    "type": "string",
+                    "description": "Адрес почтового отделения"
+                },
+                "postOfficeContacts": {
+                    "type": "array",
+                    "description": "Телефоны почтового отделения",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "postOfficeSchedule": {
+                    "type": "string",
+                    "description": "График работы почтового отделения"
+                },
+                "postOfficeType": {
+                    "type": "string",
+                    "description": "Тип отделения"
+                },
+                "returnDate": {
+                    "type": "string",
+                    "description": "Дата возврата"
+                },
+                "senderName": {
+                    "type": "string",
+                    "description": "Имя отправителя"
+                },
+                "summCashOnDelivery": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Сумма оплаты"
+                },
+                "summInsured": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Сумма страховки"
+                },
+                "trackNumber": {
+                    "type": "string",
+                    "description": "Трек-номер посылки"
+                },
+                "weightGr": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Вес посылки в граммах"
+                },
+                "weightKg": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Вес посылки в килограммах"
+                }
+            },
+            "description": "Атрибуты писем от Ф22"
+        },
+        "SubscriptionData": {
+            "type": "object",
+            "required": ["externalSystemMnemonics", "externalUserId", "hid"],
+            "properties": {
+                "externalSystemMnemonics": {
+                    "type": "string",
+                    "description": "Мнемоника внешней системы"
+                },
+                "externalUserId": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя во внешней системе"
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя в системе почты"
+                },
+                "platform": {
+                    "type": "string",
+                    "description": "Платформа (ОС)"
+                }
+            },
+            "description": "Параметры для подключения, отключения услуги"
+        },
+        "LettersListModel": {
+            "type": "object",
+            "required": ["moreDataAvailable"],
+            "properties": {
+                "letters": {
+                    "type": "array",
+                    "description": "Список писем",
+                    "items": {
+                        "$ref": "#/definitions/LetterModel"
+                    }
+                },
+                "moreDataAvailable": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Имеются ли ещё письма"
+                },
+                "pagingState": {
+                    "type": "string",
+                    "description": "Статус паджинации"
+                }
+            },
+            "description": "Модель списка писем"
+        },
+        "LetterModel": {
+            "type": "object",
+            "required": ["code", "documentNumber", "finalStatus", "finalStatusTimestamp", "hid", "id", "issueDate", "pdfStorageId", "provider", "recipient", "recipientAddress", "recipientIndex", "registeredDate", "senderName", "trackNumber", "type"],
+            "properties": {
+                "attention": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Непрочитанное"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Код для получения PDF письма"
+                },
+                "documentNumber": {
+                    "type": "string",
+                    "description": "Номер исходящего электронного документа у отправителя"
+                },
+                "finalStatus": {
+                    "type": "string",
+                    "description": "Финальный статус письма (Вручено либо возвращено)"
+                },
+                "finalStatusTimestamp": {
+                    "type": "string",
+                    "description": "Дата получения финального статуса письма PDF во внутреннем хранилище"
+                },
+                "gibddData": {
+                    "description": "Атрибуты писем от ГИБДД",
+                    "$ref": "#/definitions/GibddData"
+                },
+                "hid": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя в системе почты"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Идентификатор карточки письма, включает в себя трек-номер письма"
+                },
+                "issueDate": {
+                    "type": "string",
+                    "description": "Дата поступления письма в ИС ЭПС(по ней идет сортирвка данных )"
+                },
+                "paperData": {
+                    "description": "Атрибуты для извещений Ф22",
+                    "$ref": "#/definitions/PaperData"
+                },
+                "payment": {
+                    "description": "Атрибуты платежа",
+                    "$ref": "#/definitions/Payment"
+                },
+                "pdfStorageId": {
+                    "type": "string",
+                    "description": "Идентификатор PDF во внутреннем хранилище"
+                },
+                "provider": {
+                    "type": "string",
+                    "description": "Идентификатор отправителя письма",
+                    "enum": ["GIBDD", "FSSP", "PR", "OTHER", "SMEV", "EZP"]
+                },
+                "receiverBankRequisites": {
+                    "description": "Реквизиты банка получателя платежа",
+                    "$ref": "#/definitions/BankRequisites"
+                },
+                "recipient": {
+                    "type": "string",
+                    "description": "Получатель"
+                },
+                "recipientAddress": {
+                    "type": "string",
+                    "description": "Адрес получателя"
+                },
+                "recipientIndex": {
+                    "type": "string",
+                    "description": "Индекс получателя"
+                },
+                "registeredDate": {
+                    "type": "string",
+                    "description": "Дата регистрации исходящего электронного документа у отправителя"
+                },
+                "senderAddressIndex": {
+                    "type": "string",
+                    "description": "Индекс отправителя"
+                },
+                "senderName": {
+                    "type": "string",
+                    "description": "Имя отправителя полное"
+                },
+                "shortSenderTitle": {
+                    "type": "string",
+                    "description": "Имя отправителя сокращенное"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Заголовок письма"
+                },
+                "trackNumber": {
+                    "type": "string",
+                    "description": "Трек-номер письма. Может быть в форматах: 1) РТМ0001 (внутрироссийский), напр. '80080152000048';2) S10 (международный), напр. 'RN000005011RU';3) UUID (простые отправления);"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Тип письма",
+                    "enum": ["REGISTERED", "REGULAR", "F22"]
+                }
+            },
+            "description": "Модель письма"
+        },
+        "ValidateAddressesData": {
+            "type": "object",
+            "required": ["addresses", "externalSystemMnemonics", "externalUserId"],
+            "properties": {
+                "addresses": {
+                    "type": "array",
+                    "description": "Список адресов",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                },
+                "externalSystemMnemonics": {
+                    "type": "string",
+                    "description": "Мнемоника внешней системы"
+                },
+                "externalUserId": {
+                    "type": "string",
+                    "description": "Идентификатор пользователя во внешней системе"
+                }
+            },
+            "description": "Параметры валидации адресов пользователя"
+        },
+        "ValidationError": {
+            "type": "object",
+            "properties": {
+                "errorCode": {
+                    "type": "string",
+                    "description": "Код ошибки"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Описание ошибки"
+                },
+                "validString": {
+                    "type": "string",
+                    "description": "Подсказка"
+                }
+            },
+            "description": "Ошибка валидации"
+        }
+    }
+}

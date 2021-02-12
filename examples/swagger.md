@@ -793,7 +793,7 @@ curl --
 | amount              | number | Первоначальная сумма платежа                | Нет          |
 | deadline            | string | Срок оплаты                                 | **Да**       |
 | discountEndTime     | string | Срок истечения скидки                       | Нет          |
-| discountPercentages | double | Процент скидки (от первоначальной суммы)    | Нет          |
+| discountPercentages | number | Процент скидки (от первоначальной суммы)    | Нет          |
 | discountSumm        | number | Сумма скидки                                | Нет          |
 | dueDate             | string | Срок оплаты                                 | Нет          |
 | inn                 | string | ИНН                                         | **Да**       |
