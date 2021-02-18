@@ -9,7 +9,6 @@
             "url": "https://www.pochta.ru/"
         }
     },
-    "host": "zakaznoe-partners.pochta.ru",
     "basePath": "/",
     "tags": [{
         "name": "letters-list-controller-impl",
@@ -915,6 +914,10 @@
                 "hid": {
                     "type": "string",
                     "description": "Идентификатор пользователя в системе почты"
+                },
+                "requestId": {
+                    "type": "string",
+                    "description": "Идентификатор запроса"
                 }
             },
             "description": "Параметры обновления адресов пользователя"
@@ -1299,6 +1302,10 @@
                 "platform": {
                     "type": "string",
                     "description": "Платформа (ОС)"
+                },
+                "requestId": {
+                    "type": "string",
+                    "description": "Идентификатор запроса"
                 }
             },
             "description": "Параметры для подключения, отключения услуги"

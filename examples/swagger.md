@@ -733,6 +733,7 @@ curl --
 | externalSystemMnemonics | string                  | Мнемоника внешней системы                     | **Да**       |
 | externalUserId          | string                  | Идентификатор пользователя во внешней системе | **Да**       |
 | hid                     | string                  | Идентификатор пользователя в системе почты    | **Да**       |
+| requestId               | string                  | Идентификатор запроса                         | Нет          |
 
 ### BindUserData
 
@@ -879,6 +880,7 @@ curl --
 | externalUserId          | string | Идентификатор пользователя во внешней системе | **Да**       |
 | hid                     | string | Идентификатор пользователя в системе почты    | **Да**       |
 | platform                | string | Платформа (ОС)                                | Нет          |
+| requestId               | string | Идентификатор запроса                         | Нет          |
 
 ### LettersListModel
 
